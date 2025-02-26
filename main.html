@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #222;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color:pink;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #1e7e34;
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <h1>Snake Game</h1>
+    <button id="easy">Easy Level</button>
+    <button id="medium">Medium Level</button>
+    <button id="hard">Hard Level</button>
+
+    <script>
+        let easy = document.getElementById("easy");
+        easy.addEventListener("click", () => {
+            window.open("easy.html", "_self");
+        });
+
+        let medium = document.getElementById("medium");
+        medium.addEventListener("click", () => {
+            window.open("medium.html", "_self");
+        });
+
+        let hard = document.getElementById("hard");
+        hard.addEventListener("click", () => {
+            window.open("hard.html", "_self");
+        });
+    </script>
+</body>
+</html>

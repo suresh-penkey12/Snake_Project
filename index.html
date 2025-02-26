@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Signup</title>
+    <style>
+      /* General Body Styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+        position: relative;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Input Fields */
+      input {
+        display: block;
+        margin: 12px auto;
+        padding: 12px;
+        width: 85%;
+        border: 2px solid #ddd;
+        border-radius: 6px;
+        font-size: 1em;
+        transition: 0.3s;
+      }
+
+      input:focus {
+        border-color: #6e8efb;
+        outline: none;
+        box-shadow: 0 0 8px rgba(110, 142, 251, 0.5);
+      }
+
+      /* Buttons */
+      button {
+        padding: 12px 25px;
+        background-color: #6e8efb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s;
+        margin: 8px;
+      }
+
+      button:hover {
+        background-color: #5a75ea;
+        transform: scale(1.05);
+      }
+
+      button:active {
+        transform: scale(0.98);
+      }
+
+      .loading {
+        display: none;
+        margin-top: 12px;
+        font-size: 1.1em;
+        color: #5a75ea;
+        animation: fadeIn 0.5s ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Sign Up</h2>
+      <input type="email" id="signupEmail" placeholder="Email" />
+      <input type="password" id="signupPassword" placeholder="Password" />
+      <button id="btn1">Sign Up</button>
+      <button id="btnLogin">Login</button>
+      <button id="btnGuest" onclick="window.location.href='main.html'">Guest Login</button>
+      <div class="loading">Signing Up...</div>
+    </div>
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+      import { getAuth, createUserWithEmailAndPassword, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+      
+      const firebaseConfig = {
+        apiKey: "AIzaSyBXOeNR-w4fySVUCRzBZWAtY4sxZapo56o",
+        authDomain: "r-login-18790.firebaseapp.com",
+        projectId: "r-login-18790",
+        storageBucket: "r-login-18790.firebasestorage.app",
+        messagingSenderId: "429153030420",
+        appId: "1:429153030420:web:c102d8255275f7bcd7b201",
+      };
+      
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      
+      var btnSignup = document.getElementById("btn1");
+      var btnLogin = document.getElementById("btnLogin");
+      var btnGuest = document.getElementById("btnGuest");
+      var loadingDiv = document.querySelector(".loading");
+      
+      btnSignup.addEventListener("click", function() {
+        var email = document.getElementById("signupEmail").value;
+        var password = document.getElementById("signupPassword").value;
+        if (!email || !password) {
+          alert("Please fill in all fields.");
+          return;
+        }
+        
+        loadingDiv.style.display = "block";
+        btnSignup.disabled = true;
+        btnSignup.innerText = "Signing Up...";
+        
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            alert("Signup successful!");
+            loadingDiv.style.display = "none";
+            btnSignup.disabled = false;
+            btnSignup.innerText = "Sign Up";
+            window.location.href = "login.html";
+          })
+          .catch((error) => {
+            alert(`Signup failed: ${error.message}`);
+            loadingDiv.style.display = "none";
+            btnSignup.disabled = false;
+            btnSignup.innerText = "Sign Up";
+          });
+      });
+      
+      btnLogin.addEventListener("click", function() {
+        window.location.href = "login.html";
+      });
+      
+      btnGuest.addEventListener("click", function() {
+        signInAnonymously(auth)
+          .then(() => {
+            alert("Logged in as Guest!");
+            window.location.href = "dashboard.html";
+          })
+          .catch((error) => {
+            alert(`Guest login failed: ${error.message}`);
+          });
+      });
+    </script>
+  </body>
+</html>
